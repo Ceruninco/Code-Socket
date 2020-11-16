@@ -33,14 +33,21 @@ public class EchoClient {
         try {
       	    // creation socket ==> connexion
       	    echoSocket = new Socket(args[0],new Integer(args[1]).intValue());
+
+      	// input stream from socket
 	    socIn = new BufferedReader(
-	    		          new InputStreamReader(echoSocket.getInputStream()));    
+	    		          new InputStreamReader(echoSocket.getInputStream()));
+
+	    //output stream from socket
 	    socOut= new PrintStream(echoSocket.getOutputStream());
+	    // input stream from system
 	    stdIn = new BufferedReader(new InputStreamReader(System.in));
+
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host:" + args[0]);
             System.exit(1);
         } catch (IOException e) {
+            System.err.println(e);
             System.err.println("Couldn't get I/O for "
                                + "the connection to:"+ args[0]);
             System.exit(1);
