@@ -22,10 +22,13 @@ public class EchoServer  {
     		socIn = new BufferedReader(
     			new InputStreamReader(clientSocket.getInputStream()));    
     		PrintStream socOut = new PrintStream(clientSocket.getOutputStream());
+    		BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+
     		while (true) {
     		  String line = socIn.readLine();
+    		  String msg = stdIn.readLine();
     		  System.out.println(line);
-    		  socOut.println(line);
+    		  socOut.println(msg);
     		}
     	} catch (Exception e) {
         	System.err.println("Error in EchoServer:" + e); 
@@ -34,7 +37,7 @@ public class EchoServer  {
   
  	/**
   	* main method
-	* @param EchoServer port
+	* @param
   	* 
   	**/
        public static void main(String args[]){ 
@@ -46,6 +49,7 @@ public class EchoServer  {
   	}
 	try {
 		listenSocket = new ServerSocket(Integer.parseInt(args[0])); //port
+
 		while (true) {
 			Socket clientSocket = listenSocket.accept();
 			System.out.println("connexion from:" + clientSocket.getInetAddress());
