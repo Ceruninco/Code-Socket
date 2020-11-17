@@ -47,6 +47,7 @@ public class ClientThread
 			  activeClients.put(idClient, clientSocket);
 			  idClient++;
 
+
 			  while (true) {
 
 
