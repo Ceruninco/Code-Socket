@@ -1,5 +1,5 @@
 /***
- * ClientThread
+ * ServerThread
  * Example of a TCP server
  * Date: 14/12/08
  * Authors:
@@ -11,7 +11,7 @@ import java.io.*;
 import java.net.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ClientThread
+public class ServerThread
 		extends Thread {
 
 	private Socket clientSocket;
@@ -19,21 +19,25 @@ public class ClientThread
 	/**
 	 * Id of the client which will be the key in the map <code>activeClients</code>
 	 */
-	static int idClient = 0;
+	static int counter = 0;
+
+	private int idClient;
 
 	/**
 	 * Map of active clients connected to the chat
 	 * (using this map to not bother with synchronisation)
 	 */
-	static ConcurrentHashMap<Integer, Socket> activeClients = new ConcurrentHashMap<Integer, Socket>();;
+	static ConcurrentHashMap<Integer, Socket> activeClients = new ConcurrentHashMap<Integer, Socket>();
 
-	ClientThread(Socket s) {
+	static ConcurrentHashMap<Integer, PrintStream> activeStreams = new ConcurrentHashMap<Integer, PrintStream>();
+
+	ServerThread(Socket s) {
 		this.clientSocket = s;
 	}
 
 	/**
 	 * receives a request from client then sends an echo to the client
-	 * @param clientSocket the client socket
+	 * @ param clientSocket the client socket
 	 **/
 	public void run() {
 		try {
@@ -41,16 +45,16 @@ public class ClientThread
 			socIn = new BufferedReader(
 					new InputStreamReader(clientSocket.getInputStream()));
 			PrintStream socOut = new PrintStream(clientSocket.getOutputStream());
-			BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+			//BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 
 			// add client socket to the map of connected clients
-			activeClients.put(idClient, clientSocket);
-			idClient++;
+			activeClients.put(counter, clientSocket);
+			activeStreams.put(counter, socOut);
+			idClient = counter;
+			counter++;
 
 
 			while (true) {
-
-
 				//String l = stdIn.readLine();
 				//socOut.println(l);
 
@@ -59,11 +63,12 @@ public class ClientThread
 
 
 				// broadcast message to all available clients
-				for(int clientHost : activeClients.keySet()) {
-					// get each socket here and send a message to them.
-					PrintStream clientOut = new PrintStream(activeClients.get(clientHost).getOutputStream());
-					clientOut.println(line);
-					System.out.println(activeClients.get(clientHost).getInetAddress().getHostName() + " " + activeClients.size());
+				for(int clientHost : activeStreams.keySet()) {
+					if (clientHost != idClient) {
+						// get each socket here and send a message to them
+						activeStreams.get(clientHost).println(line);
+						//System.out.println(activeClients.get(clientHost).getInetAddress().getHostName() + " " + activeClients.size());
+					}
 				}
 			}
 		} catch (Exception e) {

@@ -7,7 +7,6 @@
 
 package stream;
 
-import java.io.*;
 import java.net.*;
 
 public class EchoServerMultiThreaded  {
@@ -32,7 +31,7 @@ public class EchoServerMultiThreaded  {
 			Socket clientSocket = listenSocket.accept();
 			System.out.println("Connexion from:" + clientSocket.getInetAddress());
 
-			ClientThread ct = new ClientThread(clientSocket);
+			ServerThread ct = new ServerThread(clientSocket);
 
 			ct.start();
 		}
