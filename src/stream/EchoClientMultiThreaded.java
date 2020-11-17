@@ -30,7 +30,11 @@ public class EchoClientMultiThreaded {
         try {
             // creation socket ==> connexion
             echoSocket = new Socket(args[0],new Integer(args[1]).intValue());
-            nickname = args[2];
+            System.out.println("Write your name : ");
+            BufferedReader reader =
+                    new BufferedReader(new InputStreamReader(System.in));
+            nickname = reader.readLine();
+
             ClientListenThread cl = new ClientListenThread(echoSocket, nickname);
             ClientWriteThread cw = new ClientWriteThread(echoSocket, nickname);
 
