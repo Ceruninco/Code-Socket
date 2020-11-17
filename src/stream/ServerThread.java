@@ -9,6 +9,7 @@ package stream;
 
 import java.io.*;
 import java.net.*;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerThread
@@ -53,6 +54,14 @@ public class ServerThread
 			activeStreams.put(counter, socOut);
 			idClient = counter;
 			counter++;
+
+			Queue<String> history = serverMultiThreaded.getHistory();
+
+			if (!history.isEmpty()){
+				for (String s: history) {
+					socOut.println(s);
+				}
+			}
 
 
 			while (true) {
