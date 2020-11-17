@@ -20,7 +20,9 @@ public class EchoClientMultiThreaded {
      **/
     public static void main(String[] args) throws IOException {
 
-        Socket echoSocket = null;
+        InetAddress groupAddr = null;
+
+        int groupPort = 0;
 
         if (args.length != 2) {
             System.out.println("Usage: java EchoClient <EchoServer host> <EchoServer port>");
@@ -29,9 +31,13 @@ public class EchoClientMultiThreaded {
 
         try {
             // creation socket ==> connexion
-            echoSocket = new Socket(args[0],new Integer(args[1]).intValue());
-            ClientListenThread cl = new ClientListenThread(echoSocket);
-            ClientWriteThread cw = new ClientWriteThread(echoSocket);
+            groupAddr = InetAddress.getByName(args[0]);
+            groupPort = Integer.parseInt(args[1]);
+
+            MulticastSocket multicastSocket = new MulticastSocket(groupPort);
+
+            ClientListenThread cl = new ClientListenThread(multicastSocket, groupAddr);
+            ClientWriteThread cw = new ClientWriteThread(multicastSocket,groupAddr);
 
             cl.start();
             cw.start();
