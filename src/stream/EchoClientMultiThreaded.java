@@ -21,17 +21,18 @@ public class EchoClientMultiThreaded {
     public static void main(String[] args) throws IOException {
 
         Socket echoSocket = null;
-
-        if (args.length != 2) {
-            System.out.println("Usage: java EchoClient <EchoServer host> <EchoServer port>");
+        String nickname = null;
+        if (args.length != 3) {
+            System.out.println("Usage: java EchoClient <EchoServer host> <EchoServer port> <nickname>");
             System.exit(1);
         }
 
         try {
             // creation socket ==> connexion
             echoSocket = new Socket(args[0],new Integer(args[1]).intValue());
-            ClientListenThread cl = new ClientListenThread(echoSocket);
-            ClientWriteThread cw = new ClientWriteThread(echoSocket);
+            nickname = args[2];
+            ClientListenThread cl = new ClientListenThread(echoSocket, nickname);
+            ClientWriteThread cw = new ClientWriteThread(echoSocket, nickname);
 
             cl.start();
             cw.start();

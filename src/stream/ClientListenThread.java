@@ -14,11 +14,12 @@ public class ClientListenThread
         extends Thread {
 
     private Socket clientSocket;
+    private String nickname;
 
 
-
-    ClientListenThread(Socket s) {
+    ClientListenThread(Socket s, String nickname) {
         this.clientSocket = s;
+        this.nickname=nickname;
     }
 
     /**
@@ -31,8 +32,10 @@ public class ClientListenThread
                     new InputStreamReader(clientSocket.getInputStream()));
             System.out.println("Thread created");
             while (true) {
+
                 String line = socIn.readLine();
-                System.out.println("echo: " + line);
+
+                System.out.println(line);
             }
         } catch (Exception e) {
             System.err.println("Error in EchoServer:" + e);

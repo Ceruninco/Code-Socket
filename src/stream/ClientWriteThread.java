@@ -16,11 +16,12 @@ public class ClientWriteThread
         extends Thread {
 
     private Socket clientSocket;
+    private String nickname;
 
 
-
-    ClientWriteThread(Socket s) {
+    ClientWriteThread(Socket s, String nickname) {
         this.clientSocket = s;
+        this.nickname = nickname;
     }
 
     /**
@@ -31,9 +32,12 @@ public class ClientWriteThread
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
             PrintStream socOut = new PrintStream(clientSocket.getOutputStream());
             while (true) {
+
                 String line = stdIn.readLine();
+
                 if (line.equals(".")) break;
-                socOut.println(line);
+
+                socOut.println(nickname + " : " + line);
             }
             socOut.close();
         } catch (Exception e) {

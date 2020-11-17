@@ -22,7 +22,7 @@ public class ServerThread
 	static int counter = 0;
 
 	private int idClient;
-
+	EchoServerMultiThreaded serverMultiThreaded;
 	/**
 	 * Map of active clients connected to the chat
 	 * (using this map to not bother with synchronisation)
@@ -31,8 +31,9 @@ public class ServerThread
 
 	static ConcurrentHashMap<Integer, PrintStream> activeStreams = new ConcurrentHashMap<Integer, PrintStream>();
 
-	ServerThread(Socket s) {
+	ServerThread(Socket s, EchoServerMultiThreaded serverMultiThreaded) {
 		this.clientSocket = s;
+		this.serverMultiThreaded = serverMultiThreaded;
 	}
 
 	/**
@@ -59,6 +60,7 @@ public class ServerThread
 				//socOut.println(l);
 
 				String line = socIn.readLine();
+				serverMultiThreaded.addToHistory(line);
 				//socOut.println(line);
 
 
