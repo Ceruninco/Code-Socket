@@ -29,7 +29,7 @@ public class ClientListenThread
             BufferedReader socIn = null;
             socIn = new BufferedReader(
                     new InputStreamReader(clientSocket.getInputStream()));
-
+            System.out.println("Thread created");
             while (true) {
                 String line = socIn.readLine();
                 System.out.println("echo: " + line);
