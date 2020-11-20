@@ -7,6 +7,9 @@
 
 package stream;
 
+import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
+
 import java.io.*;
 import java.net.*;
 
@@ -15,11 +18,13 @@ public class ClientListenThread
 
     private Socket clientSocket;
     private String nickname;
+    private Scene scene;
 
 
-    ClientListenThread(Socket s, String nickname) {
+    ClientListenThread(Socket s, String nickname, Scene scene) {
         this.clientSocket = s;
         this.nickname=nickname;
+        this.scene = scene;
     }
 
     /**
@@ -36,6 +41,8 @@ public class ClientListenThread
                 String line = socIn.readLine();
 
                 System.out.println(line);
+                TextArea area = (TextArea)scene.lookup("#largeTextArea");
+                area.appendText(line + "\n");
             }
         } catch (Exception e) {
             System.err.println("Error in EchoServer:" + e);

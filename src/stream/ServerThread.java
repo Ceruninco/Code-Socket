@@ -75,11 +75,9 @@ public class ServerThread
 
 				// broadcast message to all available clients
 				for(int clientHost : activeStreams.keySet()) {
-					if (clientHost != idClient) {
-						// get each socket here and send a message to them
-						activeStreams.get(clientHost).println(line);
-						//System.out.println(activeClients.get(clientHost).getInetAddress().getHostName() + " " + activeClients.size());
-					}
+					// get each socket here and send a message to them
+					activeStreams.get(clientHost).println(line);
+					//System.out.println(activeClients.get(clientHost).getInetAddress().getHostName() + " " + activeClients.size())
 				}
 			}
 		} catch (Exception e) {

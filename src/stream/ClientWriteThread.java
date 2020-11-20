@@ -7,6 +7,10 @@
 
 package stream;
 
+import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
@@ -17,11 +21,13 @@ public class ClientWriteThread
 
     private Socket clientSocket;
     private String nickname;
+    private Scene scene;
 
 
-    ClientWriteThread(Socket s, String nickname) {
+    ClientWriteThread(Socket s, String nickname, Scene scene) {
         this.clientSocket = s;
         this.nickname = nickname;
+        this.scene = scene;
     }
 
     /**
@@ -34,6 +40,7 @@ public class ClientWriteThread
             while (true) {
 
                 String line = stdIn.readLine();
+
 
                 if (line.equals(".")) break;
 

@@ -9,8 +9,6 @@ package stream;
 import java.io.*;
 import java.net.*;
 
-
-
 public class EchoClientMultiThreaded {
 
 
@@ -19,7 +17,6 @@ public class EchoClientMultiThreaded {
      *  accepts a connection, receives a message from client then sends an echo to the client
      **/
     public static void main(String[] args) throws IOException {
-
         Socket echoSocket = null;
         String nickname = null;
         if (args.length != 3) {
@@ -35,11 +32,11 @@ public class EchoClientMultiThreaded {
                     new BufferedReader(new InputStreamReader(System.in));
             nickname = reader.readLine();
 
-            ClientListenThread cl = new ClientListenThread(echoSocket, nickname);
+            /*ClientListenThread cl = new ClientListenThread(echoSocket, nickname);
             ClientWriteThread cw = new ClientWriteThread(echoSocket, nickname);
 
             cl.start();
-            cw.start();
+            cw.start();*/
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host:" + args[0]);
             System.exit(1);
