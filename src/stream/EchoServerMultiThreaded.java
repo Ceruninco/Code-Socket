@@ -17,12 +17,19 @@ import java.util.Queue;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+/**
+ * A class that represents the server using multiple threads: one for each connection
+ */
 public class EchoServerMultiThreaded  {
+
+	/**
+	 * A queue where all messages are stored and is available to all server threads
+	 * without concurrence problems
+	 */
 	private Queue<String> history;
 
  	/**
-  	* main method
-	* @ param EchoServer port
+  	* Constructor that initiates the queue representing the history of messages
   	* 
   	**/
 	EchoServerMultiThreaded(){
@@ -30,6 +37,13 @@ public class EchoServerMultiThreaded  {
 
 	}
 
+	/**
+	 * Method that starts the server, reads the file containing all the messages
+	 * and adds them to the <code>history queue</code> and then listens to
+	 * accept new connections, creating a <code>ServerThread</code> for each one
+	 *
+	 * @param args the list of arguments that should only contain the port
+	 */
 	public void runServer(String args[]){
         ServerSocket listenSocket;
 
@@ -69,7 +83,11 @@ public class EchoServerMultiThreaded  {
 
       }
 
-      public void addToHistory(String message){
+	/**
+	 * Method used to add a message to the history queue
+	 * @param message the message to add
+	 */
+	public void addToHistory(String message){
 		  this.history.add(message);
 		  try {
 			  FileWriter historyFileWriter = new FileWriter("history.txt", true);

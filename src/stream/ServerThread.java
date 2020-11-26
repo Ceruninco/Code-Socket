@@ -12,6 +12,7 @@ import java.net.*;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 
+
 public class ServerThread
 		extends Thread {
 
@@ -22,14 +23,19 @@ public class ServerThread
 	 */
 	static int counter = 0;
 
-	private int idClient;
+	/**
+	 * The main server
+	 */
 	EchoServerMultiThreaded serverMultiThreaded;
+
 	/**
 	 * Map of active clients connected to the chat
-	 * (using this map to not bother with synchronisation)
 	 */
 	static ConcurrentHashMap<Integer, Socket> activeClients = new ConcurrentHashMap<Integer, Socket>();
 
+	/**
+	 * Map of output streams of the active clients connected to the chat
+	 */
 	static ConcurrentHashMap<Integer, PrintStream> activeStreams = new ConcurrentHashMap<Integer, PrintStream>();
 
 	ServerThread(Socket s, EchoServerMultiThreaded serverMultiThreaded) {
@@ -38,8 +44,10 @@ public class ServerThread
 	}
 
 	/**
-	 * receives a request from client then sends an echo to the client
-	 * @ param clientSocket the client socket
+	 * When a new connection is established, send him all the history and
+	 * then listens for incoming messages from the associated client:
+	 * when a message arrives, sends it back to all the clients connected,
+	 * including the client who sent the message
 	 **/
 	public void run() {
 		try {
@@ -52,7 +60,6 @@ public class ServerThread
 			// add client socket to the map of connected clients
 			activeClients.put(counter, clientSocket);
 			activeStreams.put(counter, socOut);
-			idClient = counter;
 			counter++;
 
 			Queue<String> history = serverMultiThreaded.getHistory();

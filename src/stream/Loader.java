@@ -22,19 +22,25 @@ import javafx.stage.WindowEvent;
 
 public class Loader extends Application
 {
+    /**
+     * Nickname of the client
+     */
     String nickname = null;
+
 
     public static void main(String[] args)
     {
         Application.launch(args);
     }
 
+    /**
+     * Creates a new socket that connects to the server
+     * @param stage the associated stage
+     * @throws IOException
+     */
     @Override
     public void start(Stage stage) throws IOException
     {
-
-
-
         String []args = {"localhost", "1026"};
         if (args.length != 2) {
             System.out.println("Usage: java EchoClient <EchoServer host> <EchoServer port>");
@@ -102,10 +108,14 @@ public class Loader extends Application
             });
 
             ClientListenThread cl = new ClientListenThread(echoSocket, nickname, scene);
-            //ClientWriteThread cw = new ClientWriteThread(echoSocket, nickname, scene);
+
+            // ClientWriteThread not really used anymore since it listens to the console
+            // to get messages from the client and there is not anymore a need for a separate
+            // thread since we get the message everytime the client clicks the "Send" button
+            ClientWriteThread cw = new ClientWriteThread(echoSocket, nickname, scene);
 
             cl.start();
-            //cw.start();
+            cw.start();
 
 
         } catch (UnknownHostException e) {

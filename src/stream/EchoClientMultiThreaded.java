@@ -14,7 +14,7 @@ public class EchoClientMultiThreaded {
 
     /**
      *  main method
-     *  accepts a connection, receives a message from client then sends an echo to the client
+     *  accepts a connection and creates two threads: one to listen and one to write
      **/
     public static void main(String[] args) throws IOException {
         Socket echoSocket = null;

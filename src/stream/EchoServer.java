@@ -37,7 +37,7 @@ public class EchoServer  {
   
  	/**
   	* main method
-	* @param
+	* @param args the list of arguments that should only contain the port
   	* 
   	**/
        public static void main(String args[]){ 

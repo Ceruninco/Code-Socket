@@ -16,13 +16,27 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
+/**
+ * Thread that was used to send messages from the client to the server
+ * when there was no GUI :
+ * listens the stream of the console and send a message to the server
+ */
 public class ClientWriteThread
         extends Thread {
 
+    /**
+     * Socket of the client
+     */
     private Socket clientSocket;
+    /**
+     * The nickname of the client
+     */
     private String nickname;
+    /**
+     * The scene associated to this client, used to write
+     * the incoming messages
+     */
     private Scene scene;
-
 
     ClientWriteThread(Socket s, String nickname, Scene scene) {
         this.clientSocket = s;
@@ -31,7 +45,7 @@ public class ClientWriteThread
     }
 
     /**
-     * receives a request from client then sends an echo to the client
+     * receives a request from client's console then sends it to the server
      **/
     public void run() {
         try {
