@@ -19,8 +19,8 @@ public class EchoClientMultiThreaded {
     public static void main(String[] args) throws IOException {
         Socket echoSocket = null;
         String nickname = null;
-        if (args.length != 3) {
-            System.out.println("Usage: java EchoClient <EchoServer host> <EchoServer port> <nickname>");
+        if (args.length != 2) {
+            System.out.println("Usage: java EchoClient <EchoServer host> <EchoServer port> ");
             System.exit(1);
         }
 

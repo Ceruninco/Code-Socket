@@ -35,9 +35,9 @@ public class Loader extends Application
 
 
 
-        String []args = {"localhost", "1026", "Alice"};
-        if (args.length != 3) {
-            System.out.println("Usage: java EchoClient <EchoServer host> <EchoServer port> <nickname>");
+        String []args = {"localhost", "1026"};
+        if (args.length != 2) {
+            System.out.println("Usage: java EchoClient <EchoServer host> <EchoServer port>");
             System.exit(1);
         }
 
@@ -46,7 +46,7 @@ public class Loader extends Application
 
 
             // creation socket ==> connexion
-            echoSocket = new Socket(args[0],new Integer(args[1]).intValue());
+            echoSocket = new Socket(args[0], Integer.parseInt(args[1]));
 
 
             Parent root = FXMLLoader.load(getClass().getResource("chatLayout.fxml"));
@@ -102,10 +102,10 @@ public class Loader extends Application
             });
 
             ClientListenThread cl = new ClientListenThread(echoSocket, nickname, scene);
-            ClientWriteThread cw = new ClientWriteThread(echoSocket, nickname, scene);
+            //ClientWriteThread cw = new ClientWriteThread(echoSocket, nickname, scene);
 
             cl.start();
-            cw.start();
+            //cw.start();
 
 
         } catch (UnknownHostException e) {
