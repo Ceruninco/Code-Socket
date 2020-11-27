@@ -16,10 +16,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/**
+ * Main class for the client that opens the GUI
+ */
 public class Loader extends Application
 {
     /**
@@ -34,7 +36,7 @@ public class Loader extends Application
     }
 
     /**
-     * Creates a new socket that connects to the server
+     * Creates a new socket that connects to the server and handles the GUI
      * @param stage the associated stage
      * @throws IOException
      */

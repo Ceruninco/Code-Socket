@@ -12,7 +12,10 @@ import java.net.*;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 
-
+/**
+ * Class representing a separate thread of the server responsible
+ * for the connection with one specific client
+ */
 public class ServerThread
 		extends Thread {
 

@@ -7,6 +7,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+/**
+ * Controller of the JavaFX window
+ */
 public class ChatController {
 
     @FXML
