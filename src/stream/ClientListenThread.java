@@ -14,13 +14,31 @@ import java.util.Arrays;
 
 import static java.util.Arrays.copyOfRange;
 
+/**
+ * Thread used to listen continuously incoming messages from
+ * the group  on the client side
+ */
 public class ClientListenThread
         extends Thread {
 
+    /**
+     * The multicast socket to which the client is connected
+     */
     private MulticastSocket clientSocket;
+    /**
+     * The address of the group
+     */
     private InetAddress inetAdress;
+    /**
+     * The port of the group
+     */
     private int port;
 
+    /**
+     * Constructor of ClientListenThread
+     * @param s the multicast socket
+     * @param inetAdress the address of the group
+     */
     ClientListenThread(MulticastSocket s, InetAddress inetAdress) {
         this.clientSocket = s;
         this.inetAdress = inetAdress;
@@ -28,7 +46,8 @@ public class ClientListenThread
     }
 
     /**
-     * receives a request from client then sends an echo to the client
+     * Listens to incoming messages and when one arrives, prints it
+     * in the system console
      **/
     public void run() {
         try {

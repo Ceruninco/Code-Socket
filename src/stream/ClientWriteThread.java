@@ -9,20 +9,36 @@ package stream;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.net.Socket;
 import java.nio.ByteBuffer;
 
+/**
+ * Thread used to read the system console continuously waiting for
+ * messages from the client
+ */
 public class ClientWriteThread
         extends Thread {
 
+    /**
+     * The multicast socket to which the client is connected
+     */
     private MulticastSocket clientSocket;
+    /**
+     * The address of the group
+     */
     private InetAddress inetAdress;
+    /**
+     * The port of the group
+     */
     private int port;
 
+    /**
+     * Constructor of ClientWriteThread
+     * @param s the multicast socket
+     * @param inetAdress the address of the group
+     */
     ClientWriteThread(MulticastSocket s, InetAddress inetAdress) {
         this.clientSocket = s;
         this.inetAdress = inetAdress;
@@ -30,7 +46,8 @@ public class ClientWriteThread
     }
 
     /**
-     * receives a request from client then sends an echo to the client
+     * Reads the system console and when the client sends a message,
+     * sends it to the group. Leaves the group if a "." is sent
      **/
     public void run() {
         try {

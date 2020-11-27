@@ -10,13 +10,20 @@ import java.io.*;
 import java.net.*;
 
 
-
+/**
+ * Class that represents the client connected to a multicast group
+ */
 public class EchoClientMultiThreaded {
 
 
     /**
      *  main method
-     *  accepts a connection, receives a message from client then sends an echo to the client
+     *  Creates a multicast socket and joins the group with the parameters
+     *  specified in <code>args</code> and starts two threads : one for
+     *  listening to incoming messages and one to write messages
+     *
+     * @param args list of two arguments containing the address and the port
+     *             of the group to join
      **/
     public static void main(String[] args) throws IOException {
 
@@ -25,7 +32,7 @@ public class EchoClientMultiThreaded {
         int groupPort = 0;
 
         if (args.length != 2) {
-            System.out.println("Usage: java EchoClient <EchoServer host> <EchoServer port>");
+            System.out.println("Usage: java EchoClientMultiThreaded <EchoServer host> <EchoServer port>");
             System.exit(1);
         }
 
